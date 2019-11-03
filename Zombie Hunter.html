@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<head>
+<link rel = "stylesheet"
+    type = "text/css"
+    href = "css/ZStyle.css" />
+</head>
+
+<body>
+    <img id="zombie">
+    <img id="explode">
+    <p id="scoreText"></p>
+    <p id="score"></p>
+    <audio id="explodeAudio">
+        <source src="sounds/explosion.mp3" type="audio/mpeg">
+    </audio>
+    <audio id="resetAudio">
+        <source src="sounds/reset.mp3" type="audio/mpeg">
+    </audio>
+    <audio id="backgroundMusic">
+        <source src="sounds/music.mp3" type="audio/mpeg">
+    </audio>
+    <div id="buttonEnd">
+        <button id="end">Reset</button>
+    </div>
+    <div id="buttonStart">
+        <button id="start">Start</button>
+    </div>
+
+
+    <script>
+        let score = 0;
+        let myleft = 0;
+        let mytop = 0;
+        let zombieClock = 0;
+        let zombie = document.getElementById("zombie");
+        let explode = document.getElementById("explode");
+        let end = document.getElementById("end");
+        let start = document.getElementById("start")
+        let explodeAudio = document.getElementById("explodeAudio");
+        let resetAudio = document.getElementById("resetAudio");
+        let backgroundMusic = document.getElementById("backgroundMusic");
+
+
+        function moveZombie(){
+            explode.src = null; //This is made null in order to prevent the explosion gif from starting mid-explosion. Makes the image 'empty'.
+            explode.style.display = "none";
+            zombie.style.display = "initial";
+            myleft = (Math.random())*(window.innerWidth - 200);
+            mytop = (Math.random())*(window.innerHeight - 200);
+            zombie.style.left = myleft + "px";
+            zombie.style.top = mytop + "px";
+            zombie.src = "images/zombie.png";
+        }
+        function clickZombie(){
+            score += 1;
+            document.getElementById("score").innerHTML = score;
+            zombie.style.display = "none";
+            explode.src = "images/explode.gif" //From previous comment, this is so that every click will start the gif from the beginning. Replaces 'empty' with the gif.
+            explode.style.left = myleft + "px";
+            explode.style.top = mytop + "px";
+            explode.style.display = "initial";
+            resetTimer();
+            explodeSound();
+        }
+        function endButton(){
+            score = 0;
+            document.getElementById("score").innerHTML = score;
+            centerZombie();
+            resetTimer();
+            resetSound();
+        }
+        function centerZombie(){
+            explode.src = null;
+            explode.style.display = "none";
+            zombie.style.display = "initial";
+            myleft = ((window.innerWidth - 200) / 2);
+            mytop = ((window.innerHeight - 200) / 2);
+            zombie.style.left = myleft + "px";
+            zombie.style.top = mytop + "px";
+        }
+        function startTimer(){
+            zombieClock = setInterval(moveZombie, 2000);
+        }
+        function stopTimer(){
+            clearTimeout(zombieClock);
+        }
+        function resetTimer(){
+            stopTimer();
+            startTimer();
+        }
+        function explodeSound(){
+            explodeAudio.play();
+        }
+        function resetSound(){
+            resetAudio.play();
+        }
+        function backgroundAudio(){
+            backgroundMusic.play();
+            backgroundMusic.loop = true;
+        }
+        function startGame(){
+            zombie.src = "image/zombie.jpg";
+            document.getElementById("scoreText").innerHTML = "Score:";
+            document.getElementById("score").innerHTML = 0;
+            start.style.display = "none";
+            end.style.display = "initial";
+            backgroundAudio();
+            moveZombie();
+            startTimer();
+        }
+        end.style.display = "none";
+        zombie.style.display = "none"
+        explode.style.display = "none"
+        zombie.onclick = clickZombie;
+        start.onclick =startGame;
+        end.onclick = endButton;
+    </script>
+</body>

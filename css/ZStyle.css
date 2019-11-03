@@ -1,0 +1,40 @@
+/* ZStyle.css */
+#zombie {
+    position: absolute;
+    width: 200px;
+    height: 200px;
+}
+
+#explode{
+    position: absolute;
+    width: 200px;
+    height: 200px;
+}
+
+body {
+    background-color: black;
+}
+
+#score {
+    color: white;
+    text-align: center;
+    font-size: 30px;
+}
+
+#scoreText {
+    color: white;
+    text-align: center;
+    font-size: 30px;
+}
+
+#buttonEnd {
+    position: absolute;
+    left: 48%;
+    bottom: 10%;
+}
+
+#buttonStart {
+    position: absolute;
+    left: 48%;
+    bottom: 50%
+}
