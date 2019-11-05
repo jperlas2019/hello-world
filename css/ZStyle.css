@@ -1,11 +1,18 @@
 /* ZStyle.css */
+#levelText {
+    color: white;
+}
+
+#level {
+    color: white;
+}
 #zombie {
     position: absolute;
     width: 200px;
     height: 200px;
 }
 
-#explode{
+#explode {
     position: absolute;
     width: 200px;
     height: 200px;
@@ -37,4 +44,24 @@ body {
     position: absolute;
     left: 48%;
     bottom: 50%
+}
+
+#popup {
+    color: white
+}
+
+#speed {
+    color:white
+}
+
+#speedText {
+    color:white
+}
+
+#timeLeft {
+    color:white
+}
+
+#timeText {
+    color:white
 }
