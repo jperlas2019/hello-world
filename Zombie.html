@@ -1,8 +1,9 @@
 <!DOCTYPE html>
+<meta charset="UTF-8">
 <head>
 <link rel = "stylesheet"
     type = "text/css"
-    href = "css/ZStyle.css" />
+    href = "css/ZStyle.css"/>
 </head>
 
 <body>
@@ -10,14 +11,21 @@
     <img id="explode">
     <p id="scoreText"></p>
     <p id="score"></p>
+    <p id="levelText"></p>
+    <p id="level"></p>
+    <p id="speedText"></p>
+    <p id="speed"></p>
+    <p id="popup"></p>
+    <p id="timeText"></p>
+    <p id="timeLeft"></p>
     <audio id="explodeAudio">
-        <source src="Sounds/explosion.mp3" type="audio/mpeg">
+        <source src="sounds/explosion.mp3" type="audio/mpeg">
     </audio>
     <audio id="resetAudio">
-        <source src="Sounds/reset.mp3" type="audio/mpeg">
+        <source src="sounds/reset.mp3" type="audio/mpeg">
     </audio>
     <audio id="backgroundMusic">
-        <source src="Sounds/music.mp3" type="audio/mpeg">
+        <source src="sounds/music.mp3" type="audio/mpeg">
     </audio>
     <div id="buttonEnd">
         <button id="end">Reset</button>
@@ -32,6 +40,14 @@
         let myleft = 0;
         let mytop = 0;
         let zombieClock = 0;
+        let level = 0;
+        let speed = 2000;
+        let time = 6;
+        let timeLeft = document.getElementById("timeLeft")
+        let speedElement = document.getElementById("speed")
+        let popup = document.getElementById("popup")
+        let levelText = document.getElementById("levelText")
+        let levelElement = document.getElementById("level")
         let zombie = document.getElementById("zombie");
         let explode = document.getElementById("explode");
         let end = document.getElementById("end");
@@ -54,16 +70,19 @@
         function clickZombie(){
             score += 1;
             document.getElementById("score").innerHTML = score;
+            popup.style.display = "none";
             zombie.style.display = "none";
             explode.src = "images/explode.gif" //From previous comment, this is so that every click will start the gif from the beginning. Replaces 'empty' with the gif.
             explode.style.left = myleft + "px";
             explode.style.top = mytop + "px";
             explode.style.display = "initial";
+            increaseLevel();
             resetTimer();
             explodeSound();
         }
         function endButton(){
-            score = 0;
+            score = 0;;
+            speed = 2000
             document.getElementById("score").innerHTML = score;
             centerZombie();
             resetTimer();
@@ -79,10 +98,19 @@
             zombie.style.top = mytop + "px";
         }
         function startTimer(){
-            zombieClock = setInterval(moveZombie, 2000);
+            zombieClock = setInterval(moveZombie, speed);
+            timerClock = setInterval(timeRemaining, 1000)
+        }
+        function timeRemaining(){
+            time -= 1
+            timeLeft.innerHTML = time
+            gameOver();
         }
         function stopTimer(){
             clearTimeout(zombieClock);
+            clearTimeout(timerClock)
+            time = 6
+            timerClock.innerHTML = time
         }
         function resetTimer(){
             stopTimer();
@@ -99,20 +127,48 @@
             backgroundMusic.loop = true;
         }
         function startGame(){
-            zombie.src = "image/zombie.jpg";
+            timeLeft.innerHTML = time
+            speedElement.innerHTML = speed
+            document.getElementById("timeText").innerHTML = "Time Remaining:";
+            document.getElementById("speedText").innerHTML = "Speed:";
             document.getElementById("scoreText").innerHTML = "Score:";
             document.getElementById("score").innerHTML = 0;
+            levelText.innerHTML = "Level:"
+            levelElement.innerHTML = level
+            zombie.src = "image/zombie.jpg";
             start.style.display = "none";
             end.style.display = "initial";
             backgroundAudio();
             moveZombie();
             startTimer();
         }
+        function gameOver(){
+            if (level == 20){
+                location.reload()
+            }
+            if (time <= 0){
+                location.reload()
+            }
+        }
+        function increaseLevel(){
+            if (score % 5 == 0){
+                level += 1;
+                levelElement.innerHTML = level
+                increaseSpeed();
+                gameOver();
+            }
+        }
+        function increaseSpeed(){
+            speed -= 100
+            speedElement.innerHTML = speed
+            popup.innerHTML = "Zombie will now appear " + 100 + " milliseconds faster!";
+            popup.style.display = "initial";
+        }
         end.style.display = "none";
-        zombie.style.display = "none"
-        explode.style.display = "none"
+        zombie.style.display = "none";
+        explode.style.display = "none";
         zombie.onclick = clickZombie;
-        start.onclick =startGame;
+        start.onclick = startGame;
         end.onclick = endButton;
     </script>
 </body>
