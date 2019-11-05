@@ -27,6 +27,9 @@
     <audio id="backgroundMusic">
         <source src="Sounds/music.mp3" type="audio/mpeg">
     </audio>
+    <audio id="levelupAudio">
+        <source src="Sounds/levelup.mp3" type="audio/mpeg">
+    </audio>
     <div id="buttonEnd">
         <button id="end">Reset</button>
     </div>
@@ -52,6 +55,7 @@
         let explode = document.getElementById("explode");
         let end = document.getElementById("end");
         let start = document.getElementById("start")
+        let levelupAudio = document.getElementById("levelupAudio")
         let explodeAudio = document.getElementById("explodeAudio");
         let resetAudio = document.getElementById("resetAudio");
         let backgroundMusic = document.getElementById("backgroundMusic");
@@ -129,6 +133,9 @@
             backgroundMusic.play();
             backgroundMusic.loop = true;
         }
+        function levelupSound(){
+            levelupAudio.play();
+        }
         function startGame(){
             timeLeft.innerHTML = time
             speedElement.innerHTML = speed
@@ -158,6 +165,7 @@
                 level += 1;
                 levelElement.innerHTML = level
                 increaseSpeed();
+                levelupSound
                 gameOver();
             }
         }
