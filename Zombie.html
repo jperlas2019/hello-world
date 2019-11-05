@@ -81,8 +81,11 @@
             explodeSound();
         }
         function endButton(){
-            score = 0;;
+            score = 0;
             speed = 2000
+            speedElement.innerHTML = speed;
+            level = 0;
+            levelElement.innerHTML = level;
             document.getElementById("score").innerHTML = score;
             centerZombie();
             resetTimer();
