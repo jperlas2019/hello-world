@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<head>
+
+</head>
+<body>
+    <script>
+    function createButton(n){
+         let arr = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K',
+            'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V',
+            'W', 'X', 'Y', 'Z']
+        
+        for (let i = 0;i < n; i++){
+            let btn = document.createElement('Button')
+            document.body.appendChild(btn);
+            btn.innerHTML = arr[i]
+            btn.onclick = function() {console.log('Button ' + arr[i] + ' was clicked')}
+        }
+    }
+
+    let number = prompt('Enter a number between 0-26')
+    number = parseInt(number)
+    createButton(number);
+//----------------------------------------------------------------------------
+
+    function Recipe(title, servings, ingredients){
+        this.title = title;
+        this.servings = servings;
+        this.ingredients = ingredients;
+        this.print = function print(){
+            document.write('<br> Title: ', this.title, '<br><br> Servings: ', this.servings, '<br><br> Ingredients:')
+            for (let i = 0; i < this.ingredients.length; i++){
+                document.write('<br><br>', this.ingredients[i])
+            }
+        }
+    }
+    let myRecipe = new Recipe('Chicken Cacciatore', 2,['cinnamon', 'lettuce', 'onion']);
+    myRecipe.print();
+    </script>
+</body>
