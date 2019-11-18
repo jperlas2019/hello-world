@@ -1,0 +1,65 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Lab 9A</title>
+</head>
+<body>
+    <p>How many buttons to create?</p>
+    <input type='text' id='input'>
+    <button id='button'>Go!</button>
+    <p id='warning'></p>
+    <script>
+        function clickHandler(){
+            let userInput = document.getElementById('input').value
+            userInput = parseInt(userInput)
+            if (userInput < 5){
+                document.getElementById('warning').innerHTML = 'Number too small. Must be between 5 and 100.'
+            }
+            else if (userInput > 100){
+                document.getElementById('warning').innerHTML = 'Number too large. Must be between 5 and 100.'
+            }
+            else{
+                createButton(userInput);
+            }
+        }
+
+        function Button(buttonHeight, buttonWidth){             // This was made before the tip was given
+            this.buttonHeight = buttonHeight
+            this.buttonWidth = buttonWidth
+            this.buttonTop = Math.random() * (window.innerHeight - 80)
+            this.buttonLeft = Math.random() * (window.innerWidth - 160)
+            this.create = function(i){
+                let button = document.createElement('Button');
+                button.setAttribute('id', 'Button' + i)
+                document.body.appendChild(button)
+                button.style.width = this.buttonWidth
+                button.style.height = this.buttonHeight
+                button.style.position = 'absolute'
+                button.style.left = this.buttonLeft
+                button.style.top = this.buttonTop
+                button.style.backgroundColor = "rgb(" + (Math.random() * 255) + ',' + (Math.random() * 255) + ',' + (Math.random() * 255) + ")"
+            }
+        }
+
+        function createButton(n){
+            for (let i=0;i<n;i++){
+                let btn = new Button('5em', '10em')
+                btn.create(i);
+                startInterval(i);
+            }
+        }
+
+        function startInterval(i){
+            setInterval( function() {moveButton(i);}, 2000)
+        }
+
+        function moveButton(i){
+            document.getElementById('Button' + i).style.top = Math.random() * (window.innerHeight - 80)
+            document.getElementById('Button' + i).style.left = Math.random() * (window.innerWidth - 160)
+        }
+        document.getElementById('button').onclick = clickHandler;
+    </script>
+</body>
+</html>
